@@ -1,0 +1,12 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# 使用rails命令创建模型时，rails自动创建了测试文件以及与模型对应的测试预定义数据文件
+one:
+  email: 'user1@example.com'
+  password_digest: '******'
+  role: 1
+
+two:
+  email: 'user2@example.com'
+  password_digest: '******'
+  role: 2
