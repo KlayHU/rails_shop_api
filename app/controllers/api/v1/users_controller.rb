@@ -2,7 +2,7 @@ class Api::V1::UsersController < ApplicationController
 
   before_action :set_per_page, only: [:index]
   before_action :set_page, only: [:index]
-  before_action :set_user, only: [:show]
+  before_action :set_user, only: [:show, :update, :destroy]
 
   public
   def index
@@ -23,6 +23,19 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+
+  def update
+    if @user.update(user_params)
+      render json: {error_code: 0, data:@user, message:'ok'}, status: 202
+    else
+      render json: {error_code:500, message:@user.errors}, status: 202
+    end
+  end
+
+  def destroy
+    @user.destroy
+    render json: {error_code:0, message:'ok'}, status: 204
+  end
 
   private
 
