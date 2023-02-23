@@ -1,10 +1,4 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
-
-  # Defines the root path route ("/")
-  # root "articles#index"
-
-  # user_controller.rb
   resources :users
 
   # 设置请求参数格式为json
