@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :users
 
   # 设置请求参数格式为json
   namespace :api, defaults: { format: :json } do
@@ -9,6 +8,8 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :show, :create, :update, :destroy]
       post "/users/:id/update" => "users#update"
       post "/users/:id/destroy" => "users#destroy"
+
+      resources :tokens, only: [:create]
     end
   end
 end
