@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+
+  # 使用dependent: :destroy -> 关联用户删除了，商铺也会被一起删除
+  has_one :shop, dependent: :destroy
+
   # 增加字段校验
   validates :email, presence: true,
             uniqueness: true,
