@@ -38,4 +38,20 @@ class Api::V1::ShopsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test 'update_success: should update shop with owner' do
+    put api_v1_shop_path(@shop),
+         headers: { Authorization: JsonWebToken.encode(user_email: @shop.user.email) },
+         params: {shop:{name:'shop_name', products_count:10, order_count:10}},
+         as: :as_json
+    assert_response 201
+  end
+
+  test 'update_forbidden: forbidden update shop without owner' do
+    put api_v1_shop_path(@shop),
+        headers: { Authorization: JsonWebToken.encode(user_id: @user_5.id) },
+        params: {shop:{name:'shop_name', products_count:10, order_count:10}},
+        as: :as_json
+    assert_response 403
+  end
+
 end

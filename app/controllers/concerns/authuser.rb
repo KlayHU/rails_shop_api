@@ -7,5 +7,6 @@ module Authuser
 
     info = JsonWebToken.decode(token)
     @current_user = User.find_by_id(info[:user_id])
+    puts @current_user.email
   end
 end

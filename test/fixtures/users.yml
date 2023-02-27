@@ -8,9 +8,8 @@ one:
   role: 1
 
 two:
-  email: 'user2@example.com'
-#  password_digest: '******'
-  password_digest: <%= BCrypt::Password.create('123123')%>>
+  email: 'jwt@example.com'
+  password_digest: 'admin'
   role: 2
 
 three:

@@ -2,6 +2,7 @@ class Api::V1::ShopsController < ApplicationController
 
   before_action :set_shop, only: [:show]
   before_action :check_login, only: [:create]
+  before_action :check_owner, only: [:update]
 
   def index
     @shops = Shop.offset(@page).limit(@per_page)
@@ -26,6 +27,16 @@ class Api::V1::ShopsController < ApplicationController
     end
   end
 
+  def update
+    @user = current_user
+    if @user.shop.update(shop_params)
+      @data = set_response_data(@shop)
+      render json: {error_code:0, data:@data, message:'OK'}, status:201
+    else
+      render json: {error_code:500, message:@shop.errors}, status:201
+    end
+  end
+
   private
   def set_shop
     @shop = Shop.includes(:user).find_by_id params[:id]
@@ -38,6 +49,10 @@ class Api::V1::ShopsController < ApplicationController
 
   def check_login
     head 401 unless current_user
+  end
+
+  def check_owner
+    head 403 unless @shop&.user&.id == current_user&.id
   end
 
   public def set_response_data(shop)
