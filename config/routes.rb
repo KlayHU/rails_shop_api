@@ -10,6 +10,9 @@ Rails.application.routes.draw do
       post "/users/:id/destroy" => "users#destroy"
 
       resources :tokens, only: [:create]
+
+      # 添加商铺相关方法路由
+      resources :shops, only: [:index, :show, :create, :update, :destroy]
     end
   end
 end
