@@ -2,7 +2,7 @@ class Api::V1::ShopsController < ApplicationController
 
   before_action :set_shop, only: [:show]
   before_action :check_login, only: [:create]
-  before_action :check_owner, only: [:update]
+  before_action :check_owner, only: [:update, :destroy]
 
   def index
     @shops = Shop.offset(@page).limit(@per_page)
@@ -35,6 +35,11 @@ class Api::V1::ShopsController < ApplicationController
     else
       render json: {error_code:500, message:@shop.errors}, status:201
     end
+  end
+
+  def destroy
+    @shop.destroy
+    head 204
   end
 
   private

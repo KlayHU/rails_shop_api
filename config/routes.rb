@@ -12,7 +12,7 @@ Rails.application.routes.draw do
       # 添加商铺相关方法路由
       resources :shops, only: [:index, :show, :create, :update, :destroy]
       post "/shops/:id/update" => "shops#update"
-      # post "/shops/:id/destroy" => "shops#destroy"
+      post "/shops/:id/destroy" => "shops#destroy"
 
       resources :tokens, only: [:create]
     end
