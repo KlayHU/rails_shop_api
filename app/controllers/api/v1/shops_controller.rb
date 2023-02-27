@@ -1,6 +1,7 @@
 class Api::V1::ShopsController < ApplicationController
 
   before_action :set_shop, only: [:show]
+  before_action :check_login, only: [:create]
 
   def index
     @shops = Shop.offset(@page).limit(@per_page)
@@ -12,10 +13,31 @@ class Api::V1::ShopsController < ApplicationController
     render json: {error_code:0, data:@data, message:'OK'}, status:200
   end
 
+  def create
+    @user = current_user
+    @shop = Shop.new(shop_params)
+    @shop.user = @user
+    @shop.transaction do
+      @user.role = 2
+      if @shop.save! && @user.save!
+        @data = set_response_data(@shop)
+        render json: {error_code:0, data:@data, message:'OK'}, status: 201
+      end
+    end
+  end
+
   private
   def set_shop
     @shop = Shop.includes(:user).find_by_id params[:id]
     @shop = @shop || {}
+  end
+
+  def shop_params
+    params.require(:shop).permit(:name, :products_count, :order_count)
+  end
+
+  def check_login
+    head 401 unless current_user
   end
 
   public def set_response_data(shop)
