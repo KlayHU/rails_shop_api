@@ -12,3 +12,23 @@ two:
 #  password_digest: '******'
   password_digest: <%= BCrypt::Password.create('123123')%>>
   role: 2
+
+three:
+  email: 'user3@example.com'
+  password_digest: '***'
+  role: 1
+
+four:
+  email: 'user4@example.com'
+  password_digest: '***'
+  role: 1
+
+five:
+  email: 'user5@example.com'
+  password_digest: '***'
+  role: 1
+
+six:
+  email: 'user6@example.com'
+  password_digest: '***'
+  role: 1
